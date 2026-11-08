@@ -46,7 +46,7 @@ pub fn render(f: &mut Frame, app: &mut App, syntax_set: &SyntaxSet, theme_set: &
             TOKYO_NIGHT_CYAN
         }))
         .title(
-            " CoberTUIra - 'Tab' to switch focus, 'r' to Refresh, 'q' to Quit ",
+            " CoberTUIra - 'Tab' to switch focus, 'q' to Quit ",
         );
 
     let filter_text = if filter_active {
@@ -150,19 +150,11 @@ pub fn render(f: &mut Frame, app: &mut App, syntax_set: &SyntaxSet, theme_set: &
     }
 
     // Footer
-    let footer_text = if app.is_refreshing {
-        Span::styled(
-            " Refreshing coverage data... ",
-            Style::default()
-                .fg(TOKYO_NIGHT_RED)
-                .add_modifier(Modifier::BOLD),
-        )
-    } else {
+    let footer_text = 
         Span::styled(
             " Use arrows/j/k to navigate, type to filter. ",
             Style::default().fg(TOKYO_NIGHT_FG),
-        )
-    };
+        );
     f.render_widget(Paragraph::new(Line::from(vec![footer_text])), chunks[2]);
 }
 

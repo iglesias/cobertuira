@@ -70,31 +70,6 @@ async fn run_app(
                     match key.code {
                         KeyCode::Char('q') => return Ok(()),
                         KeyCode::Tab => app.switch_focus(),
-                        KeyCode::Char('r') => {
-                            app.is_refreshing = true;
-                            terminal.draw(|f| ui::render(f, app, syntax_set, theme_set))?;
-                            let root = app.root_dir.clone();
-                            let build_dir = root.join("build");
-                            let _ = std::process::Command::new("cmake")
-                                .args(["--build", build_dir.to_str().unwrap(), "--target", "ccov"])
-                                .output();
-                            let json_path = build_dir.join("coverage.json");
-                            let profdata = build_dir.join("default.profdata");
-                            let _ = std::process::Command::new("xcrun")
-                                .args([
-                                    "llvm-cov",
-                                    "export",
-                                    build_dir.join("rps").to_str().unwrap(),
-                                    "-object",
-                                    build_dir.join("librps.a").to_str().unwrap(),
-                                    &format!("-instr-profile={}", profdata.to_str().unwrap()),
-                                    "-ignore-filename-regex=googletest|gtest",
-                                ])
-                                .stdout(std::fs::File::create(json_path).unwrap())
-                                .output();
-                            let _ = app.load_data();
-                            app.is_refreshing = false;
-                        }
 
                         // Panel-specific handling
                         _ => match app.active_panel {

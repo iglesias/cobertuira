@@ -18,7 +18,6 @@ pub struct App {
     pub selected_index: usize,
     pub scroll_offset: u16,
     pub filter_query: String,
-    pub is_refreshing: bool,
     pub root_dir: PathBuf,
     pub active_panel: ActivePanel,
 }
@@ -41,7 +40,6 @@ impl App {
             selected_index: 0,
             scroll_offset: 0,
             filter_query: String::new(),
-            is_refreshing: false,
             root_dir: root,
             active_panel: ActivePanel::Files,
         };
